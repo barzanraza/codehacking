@@ -14,6 +14,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('role_id')->index()->unsigned()->nullable();    // index() bo awaya xera bet , nullable() allows (by default) NULL values to be inserted into the column
+            $table->integer('is_active')->default(0);   // by defualt user is not activate
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
