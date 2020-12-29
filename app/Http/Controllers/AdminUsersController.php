@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Requests\UsersRequest;
 use App\Http\Requests\UsersEditRequest;
+use App\Http\Requests\UsersRequest;
 use App\Photo;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminUsersController extends Controller
 {
@@ -160,5 +161,11 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        unlink(public_path().$user->photo->file); // unlink() function deletes a file it returns TRUE on success and FALSE on failure, The public_path() function returns the fully qualified path to your application's public directory, pewest nakat bnusin 'images/'.$user->photo->file chunka ema lanaw photo accessor man bo nusewa
+        $user->delete();
+        Session::flash('deleted_user', 'The user has been deleted');    // use to create a message
+        return redirect('/admin/users');
+
     }
 }

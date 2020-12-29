@@ -9,6 +9,12 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
+PK---->FK       hasOne(), hasMany(), belongsToMany()
+FK---->PK		belongsTo()
+
+step akani drust krdni am projecta
+1)users part
+2)posts part
 */
 
 Route::get('/', function () {
@@ -25,4 +31,13 @@ Route::get('/admin', function(){
 });
 
 
-Route::resource('admin/users', 'AdminUsersController');
+
+Route::group(['middleware'=>'admin'], function(){
+
+	Route::resource('admin/users', 'AdminUsersController');
+
+	Route::resource('admin/posts', 'AdminPostsController');
+
+
+});
+
